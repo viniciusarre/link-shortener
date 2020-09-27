@@ -1,11 +1,10 @@
-from flask import Flask
-import pymongo
+from flask import Flask, send_from_directory, request, jsonify
+from flask_pymongo import PyMongo
+import uuid
 
 app = Flask(__name__)
-
-myclient = pymongo.MongoClient("mongodb://localhost:27017/")
-
-mydb = myclient["link_shortener"]
+app.config["MONGO_URI"] = "mongodb://localhost:27017/linkshortener"
+mongo = PyMongo(app)
 
 
 @app.route('/', methods=["GET"])
@@ -13,14 +12,17 @@ def index():
     return 'This should be the homepage'
 
 
-@app.route('/set_url', methods=["GET"])
-def set_url():
-    return 'A GUI in which the user can shorten a URL'
-
-
-@app.route('/shorten', methods=["POST"])
+@app.route('/api/shorten', methods=["POST"])
 def shorten_url():
-    return 'The url should be shortened here'
+    print('**** shortening link *****')
+    _json = request.json
+    _link = _json["link"]
+    _count = 0
+    _id = uuid.uuid4()
+    id = mongo.db.link.insert({'link': _link, 'url': _id, 'count': count})
+    resp = jsonify('Id successfully inserted!')
+    resp.status_code = 200
+    return resp
 
 
 @app.route('/s', methods=["GET"])
