@@ -19,7 +19,7 @@ def shorten_url():
     _link = _json["link"]
     _count = 0
     _id = uuid.uuid4()
-    id = mongo.db.link.insert({'link': _link, 'url': _id, 'count': count})
+    id = mongo.db.link.insert({'link': _link, 'url': _id, 'count': _count})
     resp = jsonify('Id successfully inserted!')
     resp.status_code = 200
     return resp
