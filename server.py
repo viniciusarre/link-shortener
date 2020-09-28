@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory, request, jsonify
+from flask import Flask, send_from_directory, request, jsonify, render_template
 from flask_pymongo import PyMongo
 import uuid
 
@@ -12,14 +12,20 @@ def index():
     return 'This should be the homepage'
 
 
+@app.route('/shorten', methods=["GET"])
+def shorten():
+    return render_template('form.html')
+
+
 @app.route('/api/shorten', methods=["POST"])
 def shorten_url():
     print('**** shortening link *****')
-    _json = request.json
-    _link = _json["link"]
+    print(request.form)
+    _form = request.form
+    _link = _form["url"]
     _count = 0
     _id = uuid.uuid4()
-    id = mongo.db.link.insert({'link': _link, 'url': _id, 'count': _count})
+    id = mongo.db.urls.insert({'link': _link, 'url': _id, 'count': _count})
     resp = jsonify('Id successfully inserted!')
     resp.status_code = 200
     return resp
