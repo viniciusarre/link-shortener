@@ -7,6 +7,22 @@ app.config["MONGO_URI"] = "mongodb://localhost:27017/linkshortener"
 mongo = PyMongo(app)
 
 
+def shorten_from_form(form):
+    _form = form
+    _link = _form["url"]
+    _count = 0
+    _id = uuid.uuid4()
+    id = mongo.db.urls.insert(
+        {
+            'link': _link,
+            'endpoint': str(_id),
+            'count': _count
+        })
+    resp = jsonify({'message': 'Id successfully inserted!'})
+    resp.status_code = 200
+    return resp
+
+
 @app.route('/', methods=["GET"])
 def index():
     return 'This should be the homepage'
@@ -19,16 +35,13 @@ def shorten():
 
 @app.route('/api/shorten', methods=["POST"])
 def shorten_url():
-    print('**** shortening link *****')
-    print(request.form)
-    _form = request.form
-    _link = _form["url"]
-    _count = 0
-    _id = uuid.uuid4()
-    id = mongo.db.urls.insert({'link': _link, 'url': _id, 'count': _count})
-    resp = jsonify('Id successfully inserted!')
-    resp.status_code = 200
-    return resp
+    return shorten_from_form(request.form)
+
+
+@app.route('/result', methods=["POST"])
+def result():
+    result = shorten_from_form(request.form)
+    return render_template('result.html', result=result)
 
 
 @app.route('/s', methods=["GET"])

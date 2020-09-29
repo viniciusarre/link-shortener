@@ -1,0 +1,7 @@
+<body>
+    {% if result.status == '200 OK' %}
+    <div>The URL was successfully inserted!</div>
+    {% else %}
+    <div>An error occurred: {{ result }}</div>
+    {% endif %}
+</body>
