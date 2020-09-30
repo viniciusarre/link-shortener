@@ -1,7 +1,11 @@
 <body>
-    {% if result.status == '200 OK' %}
+    {% if result['status_code'] == 200 %}
     <div>The URL was successfully inserted!</div>
+    <br>Shortened URL:
+    <a href="http://localhost:5000/s/{{result['endpoint']}}">http://localhost:5000/s/{{result['endpoint']}}</a>
     {% else %}
-    <div>An error occurred: {{ result }}</div>
+    <div>An error occurred:
+        <pre>{{ result }}</pre>
+    </div>
     {% endif %}
 </body>
