@@ -7,8 +7,7 @@ app.config["MONGO_URI"] = "mongodb://localhost:27017/linkshortener"
 mongo = PyMongo(app)
 
 
-def shorten_from_form(form):
-    _form = form
+def shorten_from_form(_form):
     _link = _form["url"]
     if not("http" in _link or "https" in _link):
         _link = "https://" + _link
@@ -27,7 +26,7 @@ def shorten_from_form(form):
 
 @app.route('/', methods=["GET"])
 def index():
-    return 'This should be the homepage'
+    return render_template('index.html')
 
 
 @app.route('/shorten', methods=["GET"])
@@ -35,9 +34,15 @@ def shorten():
     return render_template('form.html')
 
 
+@app.route('/api/list', methods=["GET"])
+def list_urls():
+    return mongo.db.urls.find()
+
+
 @app.route('/api/shorten', methods=["POST"])
 def shorten_url():
-    resp = jsonify(shorten_from_form(request.form))
+    result = shorten_from_form(request.form)
+    resp = jsonify(result)
     resp.status_code = 200
     return resp
 
