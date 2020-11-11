@@ -1,6 +1,10 @@
 # About this Repo   
 
-This is a simple POC for experimenting with Link Shorteners and their logic. It was built using MongoDB and Flask. 
+This is a simple Proof of Concept for experimenting with Link Shorteners and their overall logic which is built using Flask and MongoDB.
+
+The overall architecture is quite simple, it has a few static web pages which are directly served from Flask, and it is built keeping simplicity in mind so it can be integrated to other services easily. 
+
+Feel free to set it up or fork it and set different flavors to it, if you'd like. 
 
 # How to set it up (MacOS X and Linux)
 
