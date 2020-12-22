@@ -19,8 +19,12 @@ def shorten_from_form(_form):
             'endpoint': str(_id),
             'count': _count
         })
-    resp = {'message': 'Id successfully inserted!',
-            'endpoint': str(_id), 'status_code': 200}
+    resp = {
+        'message': 'Id successfully inserted!',
+        'endpoint': str(_id), 
+        'url': 'http://localhost:5000',
+        'status_code': 200
+        }
     return resp
 
 

@@ -1,1 +1,11 @@
-Hello, you can add new links manually <a href="localhost:5000/shorten">here</a>
+{% extends 'base.html' %}
+
+{% block content %}
+<blockquote class="blockquote mt-2">
+    <p>
+        Hello, you can add new links manually
+        <a href="/shorten">here</a>
+    </p>
+</blockquote>
+
+{% endblock %}
